@@ -40,16 +40,16 @@ case $DISTRO in
 esac
 
 # Make sure zsh is in /etc/shells
-if ! grep -q "$(which zsh)" /etc/shells; then
-    echo "Adding $(which zsh) to /etc/shells..."
-    echo "$(which zsh)" | sudo tee -a /etc/shells
+ZSH_PATH=$(command -v zsh)
+if ! grep -q "$ZSH_PATH" /etc/shells; then
+    echo "$ZSH_PATH" | sudo tee -a /etc/shells
 fi
 
 # Offer to make zsh default shell
 read -p "Do you want to set Zsh as your default shell? (y/n) " SET_DEFAULT
 if [[ "$SET_DEFAULT" == "y" ]]; then
-    chsh -s "$(which zsh)"
-    echo "✅ Zsh set as default shell. It will take effect on next login."
+    chsh -s "$ZSH_PATH"
+    echo "✅ Zsh set as default shell."
 fi
 
 # Install Oh My Zsh
